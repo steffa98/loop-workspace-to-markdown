@@ -54,7 +54,12 @@ Not affiliated with or endorsed by Microsoft. Microsoft Loop is a trademark of M
 - Data collected: "Website content". The extension reads Loop pages, but only to convert them locally; nothing leaves the device.
 - Tick all three certifications: no selling or transfer to third parties, no use for unrelated purposes, no use for creditworthiness or lending.
 
-**Privacy policy URL:** the GitHub link to `PRIVACY.md`, for example `https://github.com/<you>/<repo>/blob/main/PRIVACY.md`.
+**Privacy policy URL:** https://github.com/steffa98/loop-workspace-to-markdown/blob/main/PRIVACY.md
+
+## Links (Store listing tab)
+
+- **Homepage URL:** https://github.com/steffa98/loop-workspace-to-markdown
+- **Support URL:** https://github.com/steffa98/loop-workspace-to-markdown/issues
 
 ## Before submitting
 
