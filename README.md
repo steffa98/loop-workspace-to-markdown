@@ -2,6 +2,8 @@
 
 A Chrome extension that exports a whole Microsoft Loop workspace, or a single page, to Markdown files. Workspace exports come as a ZIP that keeps the page hierarchy as folders.
 
+If it saved you time, you can buy me a coffee: [![Buy me a coffee with Revolut](https://img.shields.io/badge/Buy_me_a_coffee-Revolut-0666EB?logo=revolut&logoColor=white)](https://revolut.me/andreao2ej)
+
 > **Credit.** This project started as a fork of
 > [Loop to Markdown Converter](https://chromewebstore.google.com/detail/loop-to-markdown-converte/bfbjkakiekjknegllmpndnjaggaidged)
 > by its original author. That extension had the idea of exporting through Loop's print view.

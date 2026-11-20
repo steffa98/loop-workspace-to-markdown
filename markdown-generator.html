@@ -21,6 +21,8 @@
     pre { white-space: pre-wrap; overflow-wrap: anywhere; } /* long links must wrap */
     pre:empty { display: none; }
     textarea { min-height: 50vh; resize: vertical; }
+    .coffee { color: var(--muted); font-size: 12px; text-align: right; margin: 8px 0 0; }
+    .coffee a { color: inherit; }
   </style>
 </head>
 <body>
@@ -34,6 +36,7 @@
     </div>
     <pre id="report"></pre>
     <textarea id="editor" readonly aria-label="Markdown"></textarea>
+    <p class="coffee">Saved you time? <a href="https://revolut.me/andreao2ej" target="_blank" rel="noopener">Buy me a coffee ☕</a></p>
   </main>
   <script src="jszip.min.js"></script>
   <script src="export-core.js"></script>
