@@ -4,7 +4,10 @@ $ErrorActionPreference = 'Stop'
 Set-Location $PSScriptRoot
 Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem
 
-$version = (Get-Content manifest.json -Raw | ConvertFrom-Json).version
+$manifest = Get-Content manifest.json -Raw -Encoding UTF8 | ConvertFrom-Json
+$version = $manifest.version
+# The Chrome Web Store rejects the upload above this length
+if ($manifest.description.Length -gt 132) { throw "manifest.json description is $($manifest.description.Length) characters; the store allows 132" }
 $files = @(
   'manifest.json', 'background.js', 'export-core.js', 'popup.html', 'popup-simple.js',
   'markdown-generator.html', 'markdown-generator.js', 'loop-markdown.js', 'jszip.min.js',

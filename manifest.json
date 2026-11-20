@@ -23,7 +23,7 @@
          "world": "MAIN"
       }
    ],
-   "description": "Export a whole Microsoft Loop workspace, or one page, to Markdown files in a ZIP. Fast and complete, with a report of anything skipped.",
+   "description": "Export a Microsoft Loop workspace or page to Markdown files in a ZIP. Fast and complete, with a report of anything skipped.",
    "host_permissions": [
       "https://loop.cloud.microsoft/*"
    ],
