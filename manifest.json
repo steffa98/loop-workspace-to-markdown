@@ -1,0 +1,45 @@
+{
+   "action": {
+      "default_icon": {
+         "16": "icons/icon16.png",
+         "48": "icons/icon48.png",
+         "128": "icons/icon128.png"
+      },
+      "default_popup": "popup.html"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [
+      {
+         "all_frames": false,
+         "js": [
+            "print-blocker.js"
+         ],
+         "matches": [
+            "https://loop.cloud.microsoft/print*"
+         ],
+         "run_at": "document_start",
+         "world": "MAIN"
+      }
+   ],
+   "description": "Export a whole Microsoft Loop workspace, or one page, to Markdown files in a ZIP. Fast and complete, with a report of anything skipped.",
+   "host_permissions": [
+      "https://loop.cloud.microsoft/*"
+   ],
+   "icons": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+   },
+   "manifest_version": 3,
+   "name": "Loop Workspace to Markdown",
+   "permissions": [
+      "scripting",
+      "tabs",
+      "storage",
+      "unlimitedStorage",
+      "downloads"
+   ],
+   "version": "2.0.0"
+}

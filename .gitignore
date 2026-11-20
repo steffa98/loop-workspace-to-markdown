@@ -1,0 +1,9 @@
+# Package output (package.ps1)
+dist/
+# Copy of the original Chrome Web Store version: the original author's, not ours to publish
+1.0.0_0/
+# Python cache: Chrome won't load the extension folder while it exists
+__pycache__/
+*.pyc
+# Internal design notes: name real workspaces and pages
+docs/superpowers/

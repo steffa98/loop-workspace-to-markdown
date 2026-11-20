@@ -1,0 +1,43 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>loop-markdown tests</title>
+<!-- Open this file in Chrome: it runs the converter on made-up Loop HTML and shows PASS/FAIL per case. -->
+<pre id="out">running…</pre>
+<script src="../loop-markdown.js"></script>
+<script>
+const P = (inner, attrs = '') => `<div class="scriptor-paragraph" ${attrs}>${inner}<br class="scriptor-EOP"></div>`;
+const R = (text, style = 'font-weight: 400; font-style: normal;') => `<span class="scriptor-textRun scriptor-inline" style="${style}">${text}</span>`;
+const LI = (text, level = 1, marker = '• ', pos = 1, extra = '') =>
+  `<ul><li class="scriptor-listItem-marker-bullet" style='--scriptor-list-marker-text: "${marker}";' aria-level="${level}" aria-posinset="${pos}" ${extra}>${R(text)}<br class="scriptor-EOP"></li></ul>`;
+const page = body => `<div class="scriptor-pageFrame"><div class="scriptor-pageBody">${body}</div></div>`;
+
+const cases = [
+  ['headings shift one level', page(P(R('Title'), 'role="heading" aria-level="1"') + P(R('Sub'), 'role="heading" aria-level="3"')),
+    '## Title\n\n#### Sub\n'],
+  ['bold, italic, link, spaces outside markers', page(P(R('Bold ', 'font-weight: 600;') + R('plain ') + R('it', 'font-style: italic;') + ' ' +
+    '<span class="scriptor-textRun scriptor-hyperlink" title="https://example.com/a?b=1\nClick to follow link">site</span>')),
+    '**Bold** plain *it* [site](https://example.com/a?b=1)\n'],
+  ['two bold runs side by side merge', page(P(R('one', 'font-weight: 700;') + R('two', 'font-weight: 700;'))), '**onetwo**\n'],
+  ['bullets nest by level, consecutive lines', page(LI('a') + LI('b', 2) + LI('c')), '- a\n    - b\n- c\n'],
+  ['numbered list uses position', page(LI('first', 1, '1. ', 1) + LI('second', 1, '2. ', 2)), '1. first\n2. second\n'],
+  ['checklist', page(LI('done', 1, '', 1, 'aria-checked="true"') + LI('todo', 1, '', 2, 'aria-checked="false"')), '- [x] done\n- [ ] todo\n'],
+  ['table: header, cells with paragraphs, pipe escaped, UI removed', page(
+    '<table aria-hidden="true"><tr><td>grabber</td></tr></table>' +
+    '<table role="table"><thead><tr><th>' + P(R('Action')) + '</th><th>' + P(R('Owner')) + '</th></tr></thead>' +
+    '<tbody><tr><td>' + P(R('a|b')) + P(R('line 2')) + '</td><td>' + P(R('Ann')) + '</td></tr></tbody>' +
+    '<tfoot><tr><td>New</td></tr></tfoot></table>'),
+    '| Action | Owner |\n| --- | --- |\n| a\\|b<br>line 2 | Ann |\n'],
+  ['divider and empty paragraphs', page(P(R('above')) + P(R(' ')) + '<div class="scriptor-horizontal-divider"></div>' + P(R('below'))),
+    'above\n\n---\n\nbelow\n'],
+  ['buttons, icons and hidden runs are dropped', page(P(R('keep') + '<button>Add</button><svg></svg><span class="scriptor-nonDisplayable-textRun">x</span>')), 'keep\n'],
+  ['not a Loop page: plain text', '<div>Just <b>text</b></div>', 'Just text\n'],
+];
+
+const lines = cases.map(([name, html, expected]) => {
+  const got = loopToMarkdown(html);
+  return got === expected ? `PASS ${name}` : `FAIL ${name}\n  expected: ${JSON.stringify(expected)}\n  got:      ${JSON.stringify(got)}`;
+});
+const failed = lines.filter(l => l.startsWith('FAIL')).length;
+document.getElementById('out').textContent = `${cases.length - failed}/${cases.length} passed\n\n${lines.join('\n')}`;
+document.title = failed ? `FAIL (${failed})` : 'PASS';
+</script>
