@@ -19,13 +19,15 @@ function printUrl(link) {
   return `${LOOP_ORIGIN}/print/${base64url(JSON.stringify({ p: { u: link } }))}`;
 }
 
-// The page's SharePoint link from a Loop page address (/p/<base64url JSON with p.u>), or null
+// The page's SharePoint link from a Loop page address (/p/<base64url JSON with p.u>), or null.
+// Pages opened from a shared/Teams link carry a percent-encoded segment with a top-level u instead.
 function linkFromPageUrl(url) {
   try {
     const u = new URL(url);
     if (u.origin !== LOOP_ORIGIN || !u.pathname.startsWith('/p/')) return null;
-    const data = JSON.parse(unbase64url(u.pathname.slice(3)));
-    return (data && data.p && typeof data.p.u === 'string') ? data.p.u : null;
+    const data = JSON.parse(unbase64url(decodeURIComponent(u.pathname.slice(3))));
+    const link = data && ((data.p && data.p.u) || data.u);
+    return typeof link === 'string' ? link : null;
   } catch (e) {
     return null;
   }

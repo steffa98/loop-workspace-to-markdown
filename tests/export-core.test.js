@@ -30,6 +30,12 @@ test('linkFromPageUrl reads p.u', () => {
   assert.equal(linkFromPageUrl('https://loop.cloud.microsoft/p/!!notbase64'), null);
 });
 
+test('linkFromPageUrl reads top-level u from a percent-encoded shared link', () => {
+  const seg = encodeURIComponent(Buffer.from(JSON.stringify({ u: 'https://x-my.sharepoint.com/personal/a?nav=b' })).toString('base64'));
+  assert.match(seg, /%/);
+  assert.equal(linkFromPageUrl('https://loop.cloud.microsoft/p/' + seg), 'https://x-my.sharepoint.com/personal/a?nav=b');
+});
+
 const item = (title, value, parentValue) => ({ title, link: 'L-' + title, value, parentValue });
 const titles = nodes => nodes.map(n => n.children.length ? [n.title, titles(n.children)] : n.title);
 
